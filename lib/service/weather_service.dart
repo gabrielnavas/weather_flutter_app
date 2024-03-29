@@ -1,23 +1,10 @@
-import 'package:weather_app/models/temperature.dart';
-import 'package:weather_app/models/weather_state.dart';
-import 'package:weather_app/service/weather_mock_service.dart';
-
-class CurrentWeather {
-  final Temperature temperature;
-  late final WeatherState weatherState;
-
-  CurrentWeather({
-    required this.temperature,
-    required String weatherDescription,
-  }) {
-    weatherState = WeatherState.byDescryption(weatherDescription);
-  }
-}
+import 'package:weather_app/models/current_weather.dart';
+import 'package:weather_app/service/accweather_service.dart';
 
 abstract class WeatherService {
-  Future<CurrentWeather> currentWeather(final String city);
+  Future<CurrentWeather?> currentWeather(final String city);
 
   factory WeatherService() {
-    return WeatherMockService();
+    return AccweatherMockService();
   }
 }

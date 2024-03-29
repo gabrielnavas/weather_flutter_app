@@ -15,10 +15,10 @@ class WeatherState {
     this.detailedDescription,
   );
 
-  static WeatherState byDescryption(String description) {
+  static WeatherState byWeatherDescription(String byWeatherDescription) {
     WeatherState? state;
     for (final WeatherState s in states) {
-      if (s.description == description) {
+      if (s.description == byWeatherDescription) {
         state = s;
       }
     }

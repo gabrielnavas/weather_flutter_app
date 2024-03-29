@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/models/current_weather.dart';
 import 'package:weather_app/models/temperature.dart';
 import 'package:weather_app/service/weather_service.dart';
 
@@ -117,7 +118,7 @@ class WeatherScreen extends StatelessWidget {
                         style: const TextStyle(fontSize: 30),
                       ),
                       Text(
-                        currentWeather.temperature.city.country,
+                        currentWeather.temperature.city.country.name,
                         style: const TextStyle(fontSize: 30),
                       )
                     ],
