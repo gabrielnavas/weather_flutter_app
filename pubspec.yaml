@@ -60,8 +60,47 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/weather/icons/01.png
+    - assets/weather/icons/02.png
+    - assets/weather/icons/03.png
+    - assets/weather/icons/04.png
+    - assets/weather/icons/05.png
+    - assets/weather/icons/06.png
+    - assets/weather/icons/07.png
+    - assets/weather/icons/08.png
+    - assets/weather/icons/11.png
+    - assets/weather/icons/12.png
+    - assets/weather/icons/13.png
+    - assets/weather/icons/14.png
+    - assets/weather/icons/15.png
+    - assets/weather/icons/16.png
+    - assets/weather/icons/17.png
+    - assets/weather/icons/18.png
+    - assets/weather/icons/19.png
+    - assets/weather/icons/20.png
+    - assets/weather/icons/21.png
+    - assets/weather/icons/22.png
+    - assets/weather/icons/23.png
+    - assets/weather/icons/24.png
+    - assets/weather/icons/25.png
+    - assets/weather/icons/26.png
+    - assets/weather/icons/29.png
+    - assets/weather/icons/30.png
+    - assets/weather/icons/31.png
+    - assets/weather/icons/32.png
+    - assets/weather/icons/33.png
+    - assets/weather/icons/34.png
+    - assets/weather/icons/35.png
+    - assets/weather/icons/36.png
+    - assets/weather/icons/37.png
+    - assets/weather/icons/38.png
+    - assets/weather/icons/39.png
+    - assets/weather/icons/40.png
+    - assets/weather/icons/41.png
+    - assets/weather/icons/42.png
+    - assets/weather/icons/43.png
+    - assets/weather/icons/44.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
