@@ -1,31 +1,16 @@
-class CurrentWeatherRequest {
-  final String city;
+import 'package:weather_app/models/temperature.dart';
+import 'package:weather_app/models/weather_state.dart';
 
-  CurrentWeatherRequest({
-    required this.city,
-  });
-}
-
-enum Unit { metric, imperial }
-
-class Temperature {
-  final double value;
-  final Unit unit;
-
-  Temperature({
-    required this.value,
-    required this.unit,
-  });
-}
-
-class CurrentWeatherResponse {
+class CurrentWeather {
   final Temperature temperature;
+  final WeatherState weatherState;
 
-  CurrentWeatherResponse({
+  CurrentWeather({
     required this.temperature,
+    required this.weatherState,
   });
 }
 
 abstract class WeatherService {
-  Future<CurrentWeatherResponse> currentWeather(CurrentWeatherRequest request);
+  Future<CurrentWeather> currentWeather(final String city);
 }
