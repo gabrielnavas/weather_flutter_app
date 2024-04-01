@@ -8,7 +8,7 @@ import 'package:weather_app/service/weather_service.dart';
 
 class WeatherMockService implements WeatherService {
   @override
-  Future<CurrentWeather> currentWeather(final String city) async {
+  Future<CurrentWeather?> currentWeather(final String city) async {
     final sunnyDescription = WeatherState.states[0].description;
     return CurrentWeather(
       temperature: Temperature(

@@ -11,11 +11,12 @@ import 'package:weather_app/service/weather_service.dart';
 
 import 'package:http/http.dart' as http;
 
-class CityResponse {}
-
-class AccweatherMockService implements WeatherService {
+class AccweatherService implements WeatherService {
   @override
   Future<CurrentWeather?> currentWeather(final String city) async {
+    if (city.isEmpty) {
+      return null;
+    }
     final AccweatherCitySearchResponse? citySearchResponse =
         await _getCityKey(city);
     if (citySearchResponse == null) {

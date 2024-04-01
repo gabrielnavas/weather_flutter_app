@@ -1,13 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/models/current_weather.dart';
 import 'package:weather_app/screen/waiting.dart';
+import 'package:weather_app/service/current_location_service.dart';
 import 'package:weather_app/service/weather_service.dart';
 import 'package:weather_app/widgets/current_weather_widget.dart';
 import 'package:weather_app/widgets/image_weather_widget.dart';
 import 'package:weather_app/widgets/location_widget.dart';
 
-class WeatherScreen extends StatelessWidget {
+class WeatherScreen extends StatefulWidget {
   const WeatherScreen({super.key});
+
+  @override
+  State<WeatherScreen> createState() => _WeatherScreenState();
+}
+
+class _WeatherScreenState extends State<WeatherScreen> {
+  final TextEditingController _locationController = TextEditingController();
+
+  String _city = "";
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentLocation().catchError((value) => {print("vix")});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,24 +35,25 @@ class WeatherScreen extends StatelessWidget {
     );
   }
 
+  Future<void> getCurrentLocation() async {
+    final placemark = await CurrentLocationService().location();
+    setState(() => _city = placemark.administrativeArea!);
+  }
+
   FutureBuilder<CurrentWeather?> _futureBuilder(WeatherService weatherService) {
     return FutureBuilder(
-      future: weatherService.currentWeather("Presidente Prudente"),
+      future: weatherService.currentWeather(_city),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Waiting(text: "Carrengando...\nAguarde!");
         }
 
-        if (!snapshot.hasData) {
-          return const Waiting(text: "Tente novamente mais tarde");
-        }
-
-        final CurrentWeather currentWeather = snapshot.data!;
-        final bool isSunny = !currentWeather.weatherState.sunny;
+        final bool isSunny =
+            snapshot.hasData ? snapshot.data!.weatherState.sunny : false;
 
         const double circularRadius = 25;
 
-        return _afterWaiting(isSunny, circularRadius, currentWeather);
+        return _afterWaiting(isSunny, circularRadius, snapshot.data);
       },
     );
   }
@@ -44,34 +61,56 @@ class WeatherScreen extends StatelessWidget {
   Container _afterWaiting(
     bool isSunny,
     double circularRadius,
-    CurrentWeather currentWeather,
+    CurrentWeather? currentWeather,
   ) {
     return Container(
-      padding: const EdgeInsets.only(top: 100),
+      padding: const EdgeInsets.only(top: 50),
       decoration: decorationAfterWaiting(isSunny),
       width: double.infinity,
       child: Column(
         children: [
           SizedBox(
-            height: 170,
-            width: 250,
-            child: Stack(
-              children: [
-                ImageWeatherWidget(
-                  imageName: currentWeather.weatherState.iconName,
+            width: 300,
+            child: TextField(
+              decoration: const InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black54),
                 ),
-                CurrentWeatherWidget(
-                  circularRadius: circularRadius,
-                  currentWeather: currentWeather,
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
                 ),
-              ],
+                hintText: "Informe a cidade...",
+              ),
+              onSubmitted: (value) => setState(() => _city = value),
+              controller: _locationController,
             ),
           ),
-          LocationWidget(
-            circularRadius: circularRadius,
-            currentWeather: currentWeather,
-            isSunny: isSunny,
-          )
+          if (currentWeather == null)
+            const Center(
+              child: Text("cidade não encontrada!"),
+            ),
+          if (currentWeather != null && _city.isNotEmpty)
+            SizedBox(
+              height: 250,
+              width: 250,
+              child: Stack(
+                children: [
+                  ImageWeatherWidget(
+                    imageName: currentWeather.weatherState.iconName,
+                  ),
+                  CurrentWeatherWidget(
+                    circularRadius: circularRadius,
+                    currentWeather: currentWeather,
+                  ),
+                ],
+              ),
+            ),
+          if (currentWeather != null && _city.isNotEmpty)
+            LocationWidget(
+              circularRadius: circularRadius,
+              currentWeather: currentWeather,
+              isSunny: isSunny,
+            )
         ],
       ),
     );
