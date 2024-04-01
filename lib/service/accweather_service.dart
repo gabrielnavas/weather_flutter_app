@@ -48,9 +48,11 @@ class AccweatherMockService implements WeatherService {
   }
 
   Future<AccweatherCurrentWeatherResponse?> _getCurrentWeather(
-      AccweatherCitySearchResponse citySearchResponse) async {
-    Uri? uri = Uri.tryParse(
-        'http://dataservice.accuweather.com/currentconditions/v1/${citySearchResponse.key}?apikey=DefH0PKHzwj2ksqQ3MlHFH2EoZlp7vpL');
+    AccweatherCitySearchResponse citySearchResponse,
+  ) async {
+    final String url =
+        'http://dataservice.accuweather.com/currentconditions/v1/${citySearchResponse.key}?apikey=DefH0PKHzwj2ksqQ3MlHFH2EoZlp7vpL';
+    Uri? uri = Uri.tryParse(url);
     if (uri == null) {
       throw Exception("uri is not valid");
     }
@@ -68,8 +70,9 @@ class AccweatherMockService implements WeatherService {
   }
 
   Future<AccweatherCitySearchResponse?> _getCityKey(final String city) async {
-    Uri? uri = Uri.tryParse(
-        'http://dataservice.accuweather.com/locations/v1/cities/search?apikey=DefH0PKHzwj2ksqQ3MlHFH2EoZlp7vpL&q=$city');
+    String url =
+        'http://dataservice.accuweather.com/locations/v1/cities/search?apikey=DefH0PKHzwj2ksqQ3MlHFH2EoZlp7vpL&q=$city';
+    Uri? uri = Uri.tryParse(url);
     if (uri == null) {
       throw Exception("uri is not valid");
     }
